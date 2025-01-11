@@ -1,15 +1,16 @@
-import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import useLogin from "../../hooks/useLogin";
 
 const Login = () => {
-  const [inputs, setInputs] = React.useState({
-    username: "",
-    password: "",
-  });
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const { loading, login } = useLogin();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
+    await login(username, password);
   };
 
   return (
@@ -29,11 +30,8 @@ const Login = () => {
               type="text"
               placeholder="Enter username"
               className="w-full input input-bordered h-10"
-              autoComplete="username"
-              value={inputs.username}
-              onChange={(e) =>
-                setInputs({ ...inputs, username: e.target.value })
-              }
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
 
@@ -45,22 +43,24 @@ const Login = () => {
               type="password"
               placeholder="Enter Password"
               className="w-full input input-bordered h-10"
-              autoComplete="password"
-              value={inputs.password}
-              onChange={(e) =>
-                setInputs({ ...inputs, password: e.target.value })
-              }
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <Link
             to="/signup"
             className="text-sm  hover:underline hover:text-blue-600 mt-2 inline-block"
           >
-            "Don't have an account?"
+            {"Don't"} have an account?
           </Link>
+
           <div>
-            <button className="btn btn-block btn-sm mt-2" text="Login">
-              {"Login"}
+            <button className="btn btn-block btn-sm mt-2" disabled={loading}>
+              {loading ? (
+                <span className="loading loading-spinner "></span>
+              ) : (
+                "Login"
+              )}
             </button>
           </div>
         </form>
@@ -68,5 +68,4 @@ const Login = () => {
     </div>
   );
 };
-
 export default Login;
