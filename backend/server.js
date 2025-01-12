@@ -7,10 +7,10 @@ import messageRoute from "./routes/messageRoute.js";
 import usersRoute from "./routes/usersRoute.js";
 
 import connectDB from "./db/dbConnect.js";
+import { app, server } from "./socket/socket.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 8000;
-const app = express();
 
 //middlewares
 app.use(express.json()); //to parse incoming json request
@@ -22,7 +22,7 @@ app.use("/api/messages", messageRoute);
 app.use("/api/users", usersRoute);
 
 //server listening
-app.listen(5000, () => {
+server.listen(5000, () => {
   console.log(`Server is running on port ${PORT}`);
   connectDB();
 });
