@@ -1,7 +1,6 @@
 import { Server } from "socket.io";
 import http from "http";
 import express from "express";
-import { Socket } from "dgram";
 
 const app = express();
 const server = http.createServer(app);
@@ -11,6 +10,10 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
+
+export const getReceiverSocketId = (receiverId) => {
+  return userSocketMap[receiverId];
+};
 
 const userSocketMap = {}; //maps the user id with socket id
 

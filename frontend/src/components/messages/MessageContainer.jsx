@@ -6,7 +6,7 @@ import useConversation from "../../zustand/useConversation";
 import { useAuthContext } from "../../context/AuthContext";
 
 const MessageContainer = () => {
-  const { selectedConversation, setSelectedConversation } = useConversation();
+  const { selectedConversation } = useConversation();
   //when we logout we unmount(don't show on the next logins after logout from current login) the selectedConversation
 
   return (
