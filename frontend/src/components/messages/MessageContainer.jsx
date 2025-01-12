@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import MessageInput from "./MessageInput";
 import Messages from "./Messages";
 import { TiMessages } from "react-icons/ti";
@@ -6,9 +6,12 @@ import useConversation from "../../zustand/useConversation";
 import { useAuthContext } from "../../context/AuthContext";
 
 const MessageContainer = () => {
-  const { selectedConversation } = useConversation();
+  const { selectedConversation, setSelectedConversation } = useConversation();
   //when we logout we unmount(don't show on the next logins after logout from current login) the selectedConversation
-
+  useEffect(() => {
+    // cleanup function (unmounts)
+    return () => setSelectedConversation(null);
+  }, [setSelectedConversation]);
   return (
     <div className="md:min-w-[450px] flex flex-col">
       {!selectedConversation ? (
