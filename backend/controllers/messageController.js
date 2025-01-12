@@ -10,7 +10,11 @@ export const getMessages = async (req, res) => {
       participants: { $all: [senderId, userToChatId] },
     }).populate("messages"); //populate method can populate messages in place of messageIDs present in conversation.
 
-    res.status(200).json(conversation.messages);
+    if (!conversation) return res.status(200).json([]);
+
+    const messages = conversation.messages;
+
+    res.status(200).json(messages);
   } catch (error) {
     console.log("error in getMessages controller:", error.message);
     res.status(500).json({ error: "internal server error" });
@@ -48,7 +52,7 @@ export const sendMessage = async (req, res) => {
     //this will save in parallel
     await Promise.all([conversation.save(), newMessage.save()]);
 
-    res.status(201).json({ message: "Message sent successfully" });
+    res.status(201).json(newMessage);
   } catch (error) {
     res.status(500).json({ error: "internal server error" });
   }

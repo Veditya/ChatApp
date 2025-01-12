@@ -32,6 +32,7 @@ const Login = () => {
               className="w-full input input-bordered h-10"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              autoComplete="username"
             />
           </div>
 
@@ -45,6 +46,7 @@ const Login = () => {
               className="w-full input input-bordered h-10"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              autoComplete="password"
             />
           </div>
           <Link
